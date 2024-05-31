@@ -1,11 +1,11 @@
-name: bridge
+name: bridger
 description: "A powerful Flutter package for building bridges between different technologies."
 repository: https://github.com/robert-moonshot/bridge
-version: 0.0.1
+version: 0.0.1+4
 homepage:
 
 environment:
-  sdk: ">=3.2.6 <4.0.0"
+  sdk: ">=3.2.3 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:

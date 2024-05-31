@@ -14,21 +14,38 @@ The launch URI is constructed by replacing the query parameters of the `params.u
 
 Throws an exception if the launch fails.
 
-#### `extractMetaDataParameter(String url)`
+##### Example
 
-Decrypts the received encrypted `params` using the provided `passphrase`.
+// Example usage of the `launch` method
 
-Returns the decrypted parameters as a string.
-
-Extracts the query parameters from the given `url`.
-
-Returns a map of query parameter keys to their corresponding values.
+```dart
+await Bridge.launch(
+    BridgeParams(
+        url: 'https://example.com',
+        params: Params(
+            branchId: "branchId",
+            token: "token123",
+            refreshToken: "refreshToken",
+            username: "username",
+        ),
+    ),
+    "passphrase",
+);
+```
 
 #### `decryptParams(String passphrase)`
 
 Decrypts the received encrypted `params` using the provided `passphrase`.
 
 Returns the decrypted parameters as a `Params` object.
+
+##### Example
+
+// Example usage of the `decryptParams(String passphrase)` method
+
+```dart
+ await Bridge.decryptParams("passphrase");
+```
 
 ### `Params`
 

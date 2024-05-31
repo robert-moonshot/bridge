@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:bridge/src/aeseverywhere.dart';
-import 'package:bridge/src/bridge_params.dart';
+
+import 'package:bridger/bridge.dart';
+import 'package:bridger/src/aeseverywhere.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// A class that provides methods to launch a bridge with encrypted parameters and decrypt the received parameters.
@@ -38,9 +39,8 @@ class Bridge {
     final queryParams = url.split('?')[1];
     final paramPairs = queryParams.split('&');
     for (var pair in paramPairs) {
-      final keyValue = pair.split('=');
-      if (keyValue[0] == 'meta-data') {
-        return keyValue[1];
+      if (pair.startsWith('meta-data=')) {
+        return pair.substring('meta-data='.length);
       }
     }
     return "";
@@ -50,8 +50,7 @@ class Bridge {
     try {
       String url = Uri.base.toString();
       String params = extractMetaDataParameter(url).toString();
-      String decryptedParams =
-          Aes256.decrypt("$params==", passphrase) ?? "None";
+      String decryptedParams = Aes256.decrypt(params, passphrase) ?? "None";
       log('Decrypted Params: $decryptedParams');
       Map<String, dynamic> parsedParams = jsonDecode(decryptedParams
           .replaceAll("{", '{"')
@@ -66,6 +65,7 @@ class Bridge {
         username: parsedParams['username'],
       );
     } catch (err) {
+      log(err.toString());
       return Params(
           branchId: "error",
           token: "error",
